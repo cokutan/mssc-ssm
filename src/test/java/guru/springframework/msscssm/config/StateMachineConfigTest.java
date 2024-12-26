@@ -2,6 +2,7 @@ package guru.springframework.msscssm.config;
 
 import guru.springframework.msscssm.domain.PaymentEvent;
 import guru.springframework.msscssm.domain.PaymentState;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,7 @@ import org.springframework.statemachine.config.StateMachineFactory;
 import java.util.UUID;
 
 @SpringBootTest
+@Slf4j
 class StateMachineConfigTest {
 
     @Autowired
@@ -22,19 +24,32 @@ class StateMachineConfigTest {
 
         sm.start();
 
-        System.out.println(sm.getState().toString());
+        log.info("Current state: {}", sm.getState().toString());
 
         sm.sendEvent(PaymentEvent.PRE_AUTHORIZE);
 
-        System.out.println(sm.getState().toString());
+        log.info("Current state: {}", sm.getState().toString());
 
         sm.sendEvent(PaymentEvent.PRE_AUTH_APPROVED);
 
-        System.out.println(sm.getState().toString());
+        log.info("Current state: {}", sm.getState().toString());
 
         sm.sendEvent(PaymentEvent.PRE_AUTH_DECLINED);
 
-        System.out.println(sm.getState().toString());
+        log.info("Current state: {}", sm.getState().toString());
+
+        sm.sendEvent(PaymentEvent.AUTHORIZE);
+
+        log.info("Current state: {}", sm.getState().toString());
+
+        sm.sendEvent(PaymentEvent.AUTH_APPROVED);
+
+        log.info("Current state: {}", sm.getState().toString());
+
+        sm.sendEvent(PaymentEvent.AUTH_DECLINED);
+
+        log.info("Current state: {}", sm.getState().toString());
+
 
     }
 }
